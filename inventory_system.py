@@ -9,7 +9,9 @@ import uuid
 import sqlite3
 import os
 from contextlib import contextmanager
-
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+css_path = os.path.join(current_dir, "style.css")
 # Multi-language support
 LANGUAGES = {
     'en': {
@@ -1867,84 +1869,9 @@ class InventorySystem:
         """Main application loop"""
         st.set_page_config(page_title="InvenTech Pro", page_icon="📦", layout="wide")
         
-        # Custom CSS for tech theme
-        st.markdown("""
-        <style>
-            .stApp {
-                background: #ffffff;
-            }
-            .sidebar .sidebar-content {
-                background: #f8f9fa;
-            }
-            .stButton>button {
-                border-radius: 4px;
-                font-weight: 400;
-                border: 1px solid #dee2e6;
-                background: #f8f9fa;
-                color: #00bfff;
-            }
-            .stButton>button:hover {
-                background: #e9ecef;
-            }
-            .stButton>button[type="primary"] {
-                background: #00bfff;
-                color: #ffffff;
-                border: none;
-            }
-            .stButton>button[type="primary"]:hover {
-                background: #009acd;
-            }
-            .stTextInput>div>input {
-                border-radius: 4px;
-                border: 1px solid #dee2e6;
-                background: #ffffff;
-                color: #333333;
-            }
-            .stNumberInput>div>input {
-                border-radius: 4px;
-                border: 1px solid #dee2e6;
-                background: #ffffff;
-                color: #333333;
-            }
-            .stSelectbox>div>select {
-                border-radius: 4px;
-                border: 1px solid #dee2e6;
-                background: #ffffff;
-                color: #333333;
-            }
-            .stExpander {
-                border: 1px solid #dee2e6;
-                border-radius: 4px;
-                background: #f8f9fa;
-            }
-            .stAlert {
-                border-radius: 4px;
-                background: #fff3cd;
-                color: #856404;
-            }
-            .row-widget.stRadio > div {
-                flex-direction: row;
-            }
-            [data-testid="stMarkdownContainer"] p {
-                font-size: 0.95rem;
-                color: #666666;
-            }
-            h1, h2, h3, h4 {
-                font-weight: 500;
-                color: #00bfff;
-            }
-            .stMetric label {
-                color: #666666;
-            }
-            .stMetric value {
-                color: #00bfff;
-            }
-            .stDataFrame {
-                background: #ffffff;
-                color: #333333;
-            }
-        </style>
-        """, unsafe_allow_html=True)
+            # Load custom CSS from file
+        with open("style.css", "r") as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
         
         if not st.session_state.authenticated:
             self.show_login()
